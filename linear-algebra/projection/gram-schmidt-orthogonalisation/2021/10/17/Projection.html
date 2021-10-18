@@ -182,17 +182,16 @@ $$\vec{w}=\vec{u}-\vec{v}$$
 </p>
 <p>Now, $\vec{w}$ is orthogonal to every $v_i, i = 1,...,r$, ie.
 $$
-\vec{v}_i^T.\vec{w} \hspace{5mm}  = \hspace{5mm} 0 \\
-\\
-\vec{v}_i^T. (\vec{u}-\vec{v}) \hspace{5mm} =\hspace{5mm}0 \\
-\\
-\vec{v}_i^T.\vec{u} \hspace{5mm} = \hspace{5mm} \vec{v}_i^T.v \\
-\\
-\vec{v}_i^T. \vec{u} \hspace{5mm} = \hspace{5mm} \vec{v}_i^T.V.\vec{c}
+\begin{aligned}
+ &amp;\vec{v}_i^T.\vec{w} \hspace{5mm}  = \hspace{5mm} 0 \\
+ &amp;\vec{v}_i^T. (\vec{u}-\vec{v}) \hspace{5mm} =\hspace{5mm}0 \\
+ &amp;\vec{v}_i^T.\vec{u} \hspace{5mm} = \hspace{5mm} \vec{v}_i^T.v \\
+ &amp;\vec{v}_i^T. \vec{u} \hspace{5mm} = \hspace{5mm} \vec{v}_i^T.V.\vec{c}
+\end{aligned}
 $$</p>
 <p>So, we get r equations in r unknowns. Now, if we write all the equations explicitly in matrix form we will get,</p>
-$$ \begin{equation}
-\begin{split}
+$$
+\begin{aligned}
  &amp;\begin{pmatrix}
   \vec{v}_1^T.V.\vec{c} \\
   \vec{v}_2^T.V.\vec{c} \\
@@ -235,8 +234,7 @@ $$ \begin{equation}
   &amp;V^T.V.\vec{c}=V^T\vec{u} \\
   \\
   &amp;\vec{c} = (V^TV)^{-1}V^T\vec{u}
-  \end{split}
-  \end{equation}
+\end{aligned}
 $$<p>Now,
 $$
 \begin{equation}
@@ -272,8 +270,8 @@ So,
 $$(V^TV)^{-1} \hspace{5mm} = \hspace{5mm} diag(\frac{1}{||\vec{v}_i||^2})$$
 
 Now,
-$$\begin{equation}
-\begin{split}
+$$
+\begin{aligned}
 v &amp;= \hspace{5mm} V(V^TV)^{-1}V^Tu \\
   &amp;= V.
   \begin{pmatrix}
@@ -301,58 +299,13 @@ v &amp;= \hspace{5mm} V(V^TV)^{-1}V^Tu \\
   . \\
   \frac{\vec{v}_r^Tu}{||\vec{v}_r||^2}
   \end{pmatrix}
-\end{split}
-\end{equation}
+\end{aligned}
 $$
 So, 
 
 $$v = \frac{\vec{v}_1^Tu}{||\vec{v}_1||^2}\vec{v}_1 + \frac{\vec{v}_2^Tu}{||\vec{v}_2||^2}\vec{v}_2+...+\frac{\vec{v}_r^Tu}{||\vec{v}_r||^2}\vec{v}_r$$
 </p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-$$
-\begin{aligned}
-  &amp; \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
-  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \\
-  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}
-      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \\
-      \vdots &amp; \ddots &amp; \vdots \\
-      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)
-    \end{array} \right)
-  \left( \begin{array}{c}
-      y_1 \\
-      \vdots \\
-      y_n
-    \end{array} \right)
-\end{aligned}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-$$
-\begin{aligned}
-  \phi(x,y) &amp;= \phi (\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j) \\
-  &amp;= \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j)\\
-  &amp;= (x_1, \ldots, x_n) \left( \begin{array}{ccc}
-      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \\
-      \vdots &amp; \ddots &amp; \vdots \\
-      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)
-    \end{array} \right)
-  \left( \begin{array}{c}
-      y_1 \\
-      \vdots \\
-      y_n
-    \end{array} \right)
-\end{aligned}
-$$
 </div>
 </div>
 </div>
