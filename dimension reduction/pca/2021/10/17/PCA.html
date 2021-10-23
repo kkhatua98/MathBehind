@@ -238,9 +238,9 @@ $$\begin{aligned}
 var(P_2) &amp;= var(\vec{Q_2}.\vec{x}) \\
  &amp;= \vec{Q}_2.\Sigma.\vec{Q}_2^T \\
  &amp;= \vec{Q}_2ED_{\lambda}E^T.\vec{Q}_2^T \\
- \end{aligned}$$</p>
-$$
  &amp;= \vec{Q}_2(E_1 \ E_2 \ .. \ E_{hi} \ .. \ E_p)D_{\lambda}\begin{pmatrix}E_1^T \\ E_2^T \\ . \\ . \\ E_{hi}^T \\ . \\ . \\ E_p^T\end{pmatrix}Q_2^T \\
+\end{aligned}$$
+$$
  &amp;= (\vec{Q}_2.E_1 \ \ \ \vec{Q}_2.E_2 \ \ \ .. \ \ \ \vec{Q}_2E_{hi} \ ... \ \vec{Q}_2E_p)D_{\lambda}\begin{pmatrix}\vec{Q}_2^T.E_1^T \\ \vec{Q}_2^T.E_2^T \\ . \\ . \\ \vec{Q}_2^T.E_{hi}^T \\ . \\ . \\ . \\ \vec{Q}_2^T.E_p^T\end{pmatrix} \\
  &amp;=(\vec{Q}_2.E_1 \ \ \ \vec{Q}_2.E_2 \ \ \ ... \ \ \ 0 \ ... \ \vec{Q}_2E_p)D_{\lambda}\begin{pmatrix}\vec{Q}_2^T.E_1^T \\ \vec{Q}_2^T.E_2^T \\ . \\ . \\ 0 \\ . \\ . \\ . \\ \vec{Q}_2^T.E_p^T\end{pmatrix} \\
  &amp;=A_*D_{\lambda}A_*^T \\
@@ -249,7 +249,8 @@ $$
  &amp;= \lambda_{hi_2}.1 \\
  &amp;= \lambda_{hi_2}
 \end{aligned}
-$$<p>where, $\lambda_{hi_2}$ is the second highest eigen value and $hi_2$ is the index of it<br>
+$$
+where, $\lambda_{hi_2}$ is the second highest eigen value and $hi_2$ is the index of it<br>
 $\sum_{i=1 \\ i \neq hi}^p A_{*i}^2 = A_*^T.A_* = \underbrace{Q_2.E.E^TQ_2^T = Q_2.I.Q_2^T}_{\text{$E$ is orthogonal matrix}} = Q_2.Q_2^T = 1$</p>
 <p>Now, suppose $E_{hi_2}$ is the eigen vector corresponding to $\lambda_{hi}$.</p>
 <p>Then,$$\begin{aligned}
