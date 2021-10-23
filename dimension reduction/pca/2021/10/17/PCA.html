@@ -10,13 +10,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Get overall idea of PCA, learn how the mathematics behind it works applying the concepts of rotation of axes, eigen value and eigen vectors. Finally code everything from scratch and satisfy yourself seeing our output matches with scikit-learn!" />
 <meta property="og:description" content="Get overall idea of PCA, learn how the mathematics behind it works applying the concepts of rotation of axes, eigen value and eigen vectors. Finally code everything from scratch and satisfy yourself seeing our output matches with scikit-learn!" />
-<link rel="canonical" href="https://kkhatua98.github.io/MathBehind/dimension-reduction/pca/2021/10/17/PCA.html" />
-<meta property="og:url" content="https://kkhatua98.github.io/MathBehind/dimension-reduction/pca/2021/10/17/PCA.html" />
+<link rel="canonical" href="https://kkhatua98.github.io/MathBehind/dimension%20reduction/pca/2021/10/17/PCA.html" />
+<meta property="og:url" content="https://kkhatua98.github.io/MathBehind/dimension%20reduction/pca/2021/10/17/PCA.html" />
 <meta property="og:site_name" content="MathBehind" />
+<meta property="og:image" content="https://kkhatua98.github.io/MathBehind/images/PCA.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-10-17T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2021-10-17T00:00:00-05:00","url":"https://kkhatua98.github.io/MathBehind/dimension-reduction/pca/2021/10/17/PCA.html","@type":"BlogPosting","headline":"Principal Component Anlysis","dateModified":"2021-10-17T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkhatua98.github.io/MathBehind/dimension-reduction/pca/2021/10/17/PCA.html"},"description":"Get overall idea of PCA, learn how the mathematics behind it works applying the concepts of rotation of axes, eigen value and eigen vectors. Finally code everything from scratch and satisfy yourself seeing our output matches with scikit-learn!","@context":"https://schema.org"}</script>
+{"datePublished":"2021-10-17T00:00:00-05:00","url":"https://kkhatua98.github.io/MathBehind/dimension%20reduction/pca/2021/10/17/PCA.html","@type":"BlogPosting","image":"https://kkhatua98.github.io/MathBehind/images/PCA.png","headline":"Principal Component Anlysis","dateModified":"2021-10-17T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkhatua98.github.io/MathBehind/dimension%20reduction/pca/2021/10/17/PCA.html"},"description":"Get overall idea of PCA, learn how the mathematics behind it works applying the concepts of rotation of axes, eigen value and eigen vectors. Finally code everything from scratch and satisfy yourself seeing our output matches with scikit-learn!","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/MathBehind/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://kkhatua98.github.io/MathBehind/feed.xml" title="MathBehind" /><link rel="shortcut icon" type="image/x-icon" href="/MathBehind/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -100,7 +101,7 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="/MathBehind/categories/#dimension-reduction">dimension-reduction</a>
+        <a class="category-tags-link" href="/MathBehind/categories/#Dimension Reduction">Dimension Reduction</a>
         &nbsp;
       
         <a class="category-tags-link" href="/MathBehind/categories/#PCA">PCA</a>
@@ -198,28 +199,80 @@ $$\sum_{i=1}^{p} var(P_i) = Trace(var(Q.\vec{x})) = Trace(Q\Sigma Q^T) = Trace(Q
 $\Sigma$ is the variance covariance matrix of $\vec{x}$.</p>
 <h3 id="Getting-the-First-Axis:">
 <a class="anchor" href="#Getting-the-First-Axis:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting the First Axis:<a class="anchor-link" href="#Getting-the-First-Axis:"> </a>
-</h3>
-<p>$var(P_1) = var(\vec{Q_1}.\vec{x}) = Q_1.var(\vec{x}).Q_1^T = \underbrace{Q_1.\Sigma Q_1^T = Q_1ED_{\lambda}E^TQ_1^T}_{\text{by Eigendecomposition of $\Sigma$. (1)}} = AD_{\lambda}A^T (2) = \sum_{i=1}^p \lambda_iA_i^2 \le \lambda_{hi}\sum_{i=1}^{p}A_i^2 = \lambda_{hi}.1 = \lambda_{hi}$</p>
-<p>Here, $A = Q_1.E \ \text{(note, this is a column vector)} \\ D_{\lambda} = \text{Diagonal matrix of eigen values} = diag(\lambda_1, \lambda_2, \lambda_3, ... , \lambda_p) \\ E = \text{Orthogonal matrix of eigen vectors} = (E_1, E_2, E_3, ..., E_p), \text{where $E_i$ is the eigen vector corresponding to $\lambda<em>i$} \ and, \ \sum</em>{i=1}^pA_i^2 = A^T.A = \underbrace{Q_1.E.E^TQ_1^T = Q_1.I.Q<em>1^T}</em>{\text{$E$ is orthogonal matrix}} = Q_1.Q_1^T = 1 \ \text{$hi$, is the index for which $\lambda$ is maximum}$</p>
+</h3>$$\begin{aligned}
+ var(P_1)
+ &amp;= var(\vec{Q_1}.\vec{x}) \\
+ &amp;= Q_1.var(\vec{x}).Q_1^T \\
+ &amp;\left.\begin{aligned}
+ &amp;= Q_1.\Sigma Q_1^T \\
+ &amp;= Q_1ED_{\lambda}E^TQ_1^T
+ \end{aligned}\right\} \text{by Eigendecomposition of $\Sigma$. (1)} \\
+ &amp;= AD_{\lambda}A^T (2) \\
+ &amp;= \sum_{i=1}^p \lambda_iA_i^2 \\
+ &amp;\le \lambda_{hi}\sum_{i=1}^{p}A_i^2 \\
+ &amp;= \lambda_{hi}.1 \\
+ &amp;= \lambda_{hi}
+\end{aligned}
+$$<p>Here, $A = Q_1.E$ (note, this is a column vector)<br>
+$D_{\lambda} =$ Diagonal matrix of eigen values $= diag(\lambda_1, \lambda_2, \lambda_3, ... , \lambda_p)$<br>
+$E =$ Orthogonal matrix of eigen vectors $= (E_1, E_2, E_3, ..., E_p)$, where $E_i$ is the eigen vector corresponding to $\lambda_i$<br>
+and, $\sum_{i=1}^pA_i^2 = A^T.A = \underbrace{Q_1.E.E^TQ_1^T = Q_1.I.Q_1^T}_{\text{$E$ is orthogonal matrix}} = Q_1.Q_1^T = 1$,<br>
+$hi$, is the index for which $\lambda$ is maximum.</p>
 <p>Now, suppose $E_{hi}$ is the eigen vector corresponding to $\lambda_{hi}$.</p>
-<p>Then,$var(E_{hi}^T.\vec{x}) = E_{hi}^T\Sigma E_{hi} = E_{hi}^TED_{\lambda}E^TE_{hi} = E_{hi}^T(E_1 \ E_2 \ E_3 \ ... \ E_{hi} \ ... \ E_p)D_{\lambda}\begin{pmatrix}E_1^T \\ E_2^T \\ E_3^T \\ . \\ . \\ E_{hi}^T \\ . \\ . \\ . \\ E_p^T\end{pmatrix}E_{hri}= \vec{e}_{hi}^TD_{\lambda}\vec{e}_{hi} = \lambda_{hi}$</p>
+<p>Then, $$\begin{aligned}
+var(E_{hi}^T.\vec{x})
+ &amp;= E_{hi}^T\Sigma E_{hi} \\
+ &amp;= E_{hi}^TED_{\lambda}E^TE_{hi} \\
+ &amp;= E_{hi}^T(E_1 \ E_2 \ ... \ E_{hi} \ ... \ E_p)D_{\lambda}\begin{pmatrix}E_1^T \\ E_2^T \\ . \\ . \\ E_{hi}^T \\ . \\ . \\ . \\ E_p^T\end{pmatrix}E_{hri}\\
+ &amp;= \vec{e}_{hi}^TD_{\lambda}\vec{e}_{hi} = \lambda_{hi}
+\end{aligned}
+$$</p>
 <p>Here, only jth entry of $e_j$ is 1, rest are 0.</p>
 <p>So, the first Principal Component $Q_1=E_{hi}^T$</p>
 <h3 id="Getting-the-Second-Axis">
 <a class="anchor" href="#Getting-the-Second-Axis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting the Second Axis<a class="anchor-link" href="#Getting-the-Second-Axis"> </a>
 </h3>
-<p>$Q$ is orthogonal matrix, so, $Q_2.Q_1^T=0; \ Q_2.E_{hi}=0$.
-Now,
-
-$$var(P_2) = var(\vec{Q_2}.\vec{x}) = \vec{Q}_2.\Sigma.\vec{Q}_2^T = \vec{Q}_2ED_{\lambda}E^T.\vec{Q}_2^T = \vec{Q}_2(E_1 \ E_2 \ E_3 \ ... \ E_{hi} \ ... \ E_p)D_{\lambda}\begin{pmatrix}E_1^T \\ E_2^T \\ E_3^T \\ . \\ . \\ E_{hi}^T \\ . \\ . \\ . \\ E_p^T\end{pmatrix}Q_2^T = (\vec{Q}_2.E_1 \ \ \ \vec{Q}_2.E_2 \ \ \ \vec{Q}_2.E_3 \ \ \ ... \ \ \ \vec{Q}_2E_{hi} \ ... \ \vec{Q}_2E_p)D_{\lambda}\begin{pmatrix}\vec{Q}_2^T.E_1^T \\ \vec{Q}_2^T.E_2^T \\ \vec{Q}_2^T.E_3^T \\ . \\ . \\ \vec{Q}_2^T.E_{hi}^T \\ . \\ . \\ . \\ \vec{Q}_2^T.E_p^T\end{pmatrix}=(\vec{Q}_2.E_1 \ \ \ \vec{Q}_2.E_2 \ \ \ \vec{Q}_2.E_3 \ \ \ ... \ \ \ 0 \ ... \ \vec{Q}_2E_p)D_{\lambda}\begin{pmatrix}\vec{Q}_2^T.E_1^T \\ \vec{Q}_2^T.E_2^T \\ \vec{Q}_2^T.E_3^T \\ . \\ . \\ 0 \\ . \\ . \\ . \\ \vec{Q}_2^T.E_p^T\end{pmatrix}=A_*D_{\lambda}A_*^T=\sum_{i=1 \\ i \neq hi}^p \lambda_iA_{*i}^2 \le \lambda_{hi_2}\sum_{i=1 \\ i \neq hi}^p A_{*i}^2 = \lambda_{hi_2}.1 = \lambda_{hi_2}$$
-
-where, $\text{$\lambda_{hi_2}$ is the second highest eigen value and $hi<em>2$ is the index of it} \ \sum</em>{i=1 \ i \neq hi}^p A<em>{*i}^2 = A</em><em>^T.A_</em> = \underbrace{Q_2.E.E^TQ_2^T = Q_2.I.Q<em>2^T}</em>{\text{$E$ is orthogonal matrix}} = Q_2.Q_2^T = 1$</p>
+<p>$Q$ is orthogonal matrix, so, $Q_2.Q_1^T=0; \ Q_2.E_{hi}=0$.</p>
+<p>Now,
+$$\begin{aligned}
+var(P_2) &amp;= var(\vec{Q_2}.\vec{x}) \\
+ &amp;= \vec{Q}_2.\Sigma.\vec{Q}_2^T \\
+ &amp;= \vec{Q}_2ED_{\lambda}E^T.\vec{Q}_2^T \\
+ &amp;= \vec{Q}_2(E_1 \ E_2 \ .. \ E_{hi} \ .. \ E_p)D_{\lambda}\begin{pmatrix}E_1^T \\ E_2^T \\ . \\ . \\ E_{hi}^T \\ . \\ . \\ E_p^T\end{pmatrix}Q_2^T \\
+ &amp;= (\vec{Q}_2.E_1 \ \ \ \vec{Q}_2.E_2 \ \ \ .. \ \ \ \vec{Q}_2E_{hi} \ ... \ \vec{Q}_2E_p)D_{\lambda}\begin{pmatrix}\vec{Q}_2^T.E_1^T \\ \vec{Q}_2^T.E_2^T \\ . \\ . \\ \vec{Q}_2^T.E_{hi}^T \\ . \\ . \\ . \\ \vec{Q}_2^T.E_p^T\end{pmatrix} \\
+ &amp;=(\vec{Q}_2.E_1 \ \ \ \vec{Q}_2.E_2 \ \ \ ... \ \ \ 0 \ ... \ \vec{Q}_2E_p)D_{\lambda}\begin{pmatrix}\vec{Q}_2^T.E_1^T \\ \vec{Q}_2^T.E_2^T \\ . \\ . \\ 0 \\ . \\ . \\ . \\ \vec{Q}_2^T.E_p^T\end{pmatrix} \\
+ &amp;=A_*D_{\lambda}A_*^T \\
+ &amp;=\sum_{i=1 \\ i \neq hi}^p \lambda_iA_{*i}^2 \le \lambda_{hi_2}\sum_{i=1 \\ i \neq hi}^p A_{*i}^2 \\
+ &amp;= \lambda_{hi_2}.1 \\
+ &amp;= \lambda_{hi_2}
+\end{aligned}
+$$
+where, $\lambda_{hi_2}$ is the second highest eigen value and $hi_2$ is the index of it<br>
+$\sum_{i=1 \\ i \neq hi}^p A_{*i}^2 = A_*^T.A_* = \underbrace{Q_2.E.E^TQ_2^T = Q_2.I.Q_2^T}_{\text{$E$ is orthogonal matrix}} = Q_2.Q_2^T = 1$</p>
 <p>Now, suppose $E_{hi_2}$ is the eigen vector corresponding to $\lambda_{hi}$.</p>
-<p>Then,$var(E_{hi_2}^T.\vec{x}) = E_{hi_2}^T\Sigma E_{hi_2} = E_{hi_2}^TED_{\lambda}E^TE_{hi_2} = E_{hi_2}^T(E_1 \ E_2 \ E_3 \ ... \ E_{hi_2} \ ... \ E_p)D_{\lambda}\begin{pmatrix}E_1^T \\ E_2^T \\ E_3^T \\ . \\ . \\ E_{hi_2}^T \\ . \\ . \\ . \\ E_p^T\end{pmatrix}E_{hi_2}= \vec{e}_{hi_2}^TD_{\lambda}\vec{e}_{hi_2} = \lambda_{hi_2}$</p>
+<p>Then,$$\begin{aligned}
+var(E_{hi_2}^T.\vec{x}) 
+ &amp;= E_{hi_2}^T\Sigma E_{hi_2} \\
+ &amp;= E_{hi_2}^TED_{\lambda}E^TE_{hi_2} \\
+ &amp;= E_{hi_2}^T(E_1 \ E_2 \ E_3 \ ... \ E_{hi_2} \ ... \ E_p)D_{\lambda}\begin{pmatrix}E_1^T \\ E_2^T \\ E_3^T \\ . \\ . \\ E_{hi_2}^T \\ . \\ . \\ . \\ E_p^T\end{pmatrix}E_{hi_2} \\
+ &amp;= \vec{e}_{hi_2}^TD_{\lambda}\vec{e}_{hi_2} \\
+ &amp;= \lambda_{hi_2}
+\end{aligned}
+$$</p>
 <p>Here, only jth entry of $e_j$ is 1, rest are 0.</p>
 <p>So, the first Principal Component $Q_2=E_{hi_2}^T$</p>
 <p><strong>Note:</strong></p>
-<p>$cov(P_1, \ P_2) = cov(\vec{Q}_1.\vec{x}, \vec{Q_2}.\vec{x}) = cov(\vec{E}_{hi}^T.\vec{x}, \vec{E}_{hi_2}^T.\vec{x}) = \vec{E}_{hi}^T.\Sigma \vec{E}_{hi_2} = E_{hi}^T(\vec{E}_1 \ \vec{E}_2 \ \vec{E}_3 \ ... \ \vec{E}_{hi} \ ... \ \vec{E}_p)D_{\lambda}\begin{pmatrix}\vec{E}_1^T \\ \vec{E}_2^T \\ \vec{E}_3^T \\ . \\ . \\ \vec{E}_{hi_2}^T \\ . \\ . \\ . \\ \vec{E}_p^T\end{pmatrix}.\vec{E}_{hi_2} = (0 \ 0 \ 0 \ ... \ 1 \ ... \ 0)D_{\lambda}\begin{pmatrix}0 \\ 0 \\ 0 \\ . \\ . \\ 1 \\ . \\ . \\ . \\ 0\end{pmatrix}=\underbrace{(0 \ 0 \ 0 \ ... \ 1 \ ... \ 0)}_{\text{1 in $hi$ position}}\underbrace{\begin{pmatrix}0 \\ 0 \\ 0 \\ . \\ . \\ \lambda_{hi_2} \\ . \\ . \\ . \\ 0\end{pmatrix}}_{\text{$\lambda_{hi_2}$ in $hi_2$ position}}=0$, ie covariance is 0, so correlation is also 0.</p>
+$$\begin{aligned}
+cov(P_1, \ P_2) 
+ &amp;= cov(\vec{Q}_1.\vec{x}, \vec{Q_2}.\vec{x}) \\
+ &amp;= cov(\vec{E}_{hi}^T.\vec{x}, \vec{E}_{hi_2}^T.\vec{x}) \\
+ &amp;= \vec{E}_{hi}^T.\Sigma \vec{E}_{hi_2} \\
+ &amp;= E_{hi}^T(\vec{E}_1 \ \vec{E}_2 \ \vec{E}_3 \ ... \ \vec{E}_{hi} \ ... \ \vec{E}_p)D_{\lambda}\begin{pmatrix}\vec{E}_1^T \\ \vec{E}_2^T \\ \vec{E}_3^T \\ . \\ . \\ \vec{E}_{hi_2}^T \\ . \\ . \\ . \\ \vec{E}_p^T\end{pmatrix}.\vec{E}_{hi_2} \\
+ &amp;= (0 \ 0 \ 0 \ ... \ 1 \ ... \ 0)D_{\lambda}\begin{pmatrix}0 \\ 0 \\ 0 \\ . \\ . \\ 1 \\ . \\ . \\ . \\ 0\end{pmatrix} \\
+ &amp;=\underbrace{(0 \ 0 \ 0 \ ... \ 1 \ ... \ 0)}_{\text{1 in $hi$ position}}\underbrace{\begin{pmatrix}0 \\ 0 \\ 0 \\ . \\ . \\ \lambda_{hi_2} \\ . \\ . \\ . \\ 0\end{pmatrix}}_{\text{$\lambda_{hi_2}$ in $hi_2$ position}} \\
+ &amp;=0
+\end{aligned}
+$$<p>, ie covariance is 0, so correlation is also 0.</p>
 <p>So, one advantage of this rotation is that the resulting axes become <strong>uncorrelated</strong> (not independent). Here we should not get confuse with the concept of orthogonality and uncorrelatedness. Orthogonality is a geometrical concept, where uncorrelatedness is statistical concept. Also, we can rotate the axes in a direction, such that the resulting axes are correlated.</p>
 <p>Like this we can calculate the remaining Principal Components.</p>
 <h2 id="How-to-Calculate-Principal-Components-for-Data">
@@ -511,7 +564,7 @@ and calculate the eigenvalue, eigenvectors of $S$.</p>
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/MathBehind/dimension-reduction/pca/2021/10/17/PCA.html" hidden></a>
+</script><a class="u-url" href="/MathBehind/dimension%20reduction/pca/2021/10/17/PCA.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
