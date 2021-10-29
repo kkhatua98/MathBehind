@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Mathematics behind Logistic Regression (Binomial) | MathBehind</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Mathematics behind Logistic Regression (Binomial)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Learn how Logistic Regression is different from Linear Regression; formulate the problem, dervie the Hessian matrix and show that the problem is negative definite." />
+<meta property="og:description" content="Learn how Logistic Regression is different from Linear Regression; formulate the problem, dervie the Hessian matrix and show that the problem is negative definite." />
+<link rel="canonical" href="https://kkhatua98.github.io/MathBehind/logistic%20regression/mle/hessian%20matrix/2021/10/29/LogisticRegression.html" />
+<meta property="og:url" content="https://kkhatua98.github.io/MathBehind/logistic%20regression/mle/hessian%20matrix/2021/10/29/LogisticRegression.html" />
+<meta property="og:site_name" content="MathBehind" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-29T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2021-10-29T00:00:00-05:00","url":"https://kkhatua98.github.io/MathBehind/logistic%20regression/mle/hessian%20matrix/2021/10/29/LogisticRegression.html","@type":"BlogPosting","headline":"Mathematics behind Logistic Regression (Binomial)","dateModified":"2021-10-29T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://kkhatua98.github.io/MathBehind/logistic%20regression/mle/hessian%20matrix/2021/10/29/LogisticRegression.html"},"description":"Learn how Logistic Regression is different from Linear Regression; formulate the problem, dervie the Hessian matrix and show that the problem is negative definite.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/MathBehind/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://kkhatua98.github.io/MathBehind/feed.xml" title="MathBehind" /><link rel="shortcut icon" type="image/x-icon" href="/MathBehind/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/MathBehind/">MathBehind</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/MathBehind/about/">About Me</a><a class="page-link" href="/MathBehind/search/">Search</a><a class="page-link" href="/MathBehind/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Mathematics behind Logistic Regression (Binomial)</h1><p class="page-description">Learn how Logistic Regression is different from Linear Regression; formulate the problem, dervie the Hessian matrix and show that the problem is negative definite.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-10-29T00:00:00-05:00" itemprop="datePublished">
+        Oct 29, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/MathBehind/categories/#Logistic Regression">Logistic Regression</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/MathBehind/categories/#MLE">MLE</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/MathBehind/categories/#Hessian Matrix">Hessian Matrix</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/kkhatua98/MathBehind/tree/master/_notebooks/2021-10-29-LogisticRegression.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/MathBehind/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/kkhatua98/MathBehind/master?filepath=_notebooks%2F2021-10-29-LogisticRegression.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/MathBehind/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/kkhatua98/MathBehind/blob/master/_notebooks/2021-10-29-LogisticRegression.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/MathBehind/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Mathematical-Representation">Mathematical Representation </a></li>
+<li class="toc-entry toc-h2"><a href="#Coefficient-Estimates-by-MLE">Coefficient Estimates by MLE </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Form-of-the-Log-Likelihood">Form of the Log Likelihood </a></li>
+<li class="toc-entry toc-h3"><a href="#Deriving-the-First-Derivative">Deriving the First Derivative </a></li>
+<li class="toc-entry toc-h3"><a href="#Deriving-the-Second-Derivative">Deriving the Second Derivative </a></li>
+<li class="toc-entry toc-h3"><a href="#Forming-the-Hessian-Matrix-and-Proving-it-is-Negative-Definite">Forming the Hessian Matrix and Proving it is Negative Definite </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-10-29-LogisticRegression.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let $\vec{x} = (x_1, x_2, x_3, ..., x_p)^T$ is the p dimensional independent vector and $y$ is the categorical dependent variable. For now suppose $y$ has only two categories (for more than two categories mathematics is little different). We will always represent categories by 0 and 1. In some cases to do that we may have to use appropriate technic to represent categories by 0 and 1. For example, if categories are boy or girl then we can represent 0 for boy and 1 for girl, alternatively 0 for girl and 1 for boy.</p>
+<h2 id="Mathematical-Representation">
+<a class="anchor" href="#Mathematical-Representation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mathematical Representation<a class="anchor-link" href="#Mathematical-Representation"> </a>
+</h2>
+<p>Now,we may try to fit a linear regression model of the form,
+$y_i=\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i3} + ... + \beta_p x_{ip} + \epsilon_i$
+then, as all $y$s are not same, mix of 0 and 1, all the coefficient estimates can not be zero at the same time; ie. the regression plane would have non-zero slope along some axis. So, for suitable choice of $x$ vector predicted value of y would be greater than 0, similarly for suitable choice of x predicted value of y can be negative (becomes unbounded briefly said). So, what we do is, we set,
+$$y_i \sim Bernoulli(p_i)$$,
+where, $$p_i = P(y_i = 1) = \frac{1}{1+ exp[-(\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i3} + ... + \beta_p x_{ip})]}$$
+and estimate the parameters by <strong>MLE</strong>.</p>
+<h2 id="Coefficient-Estimates-by-MLE">
+<a class="anchor" href="#Coefficient-Estimates-by-MLE" aria-hidden="true"><span class="octicon octicon-link"></span></a>Coefficient Estimates by MLE<a class="anchor-link" href="#Coefficient-Estimates-by-MLE"> </a>
+</h2>
+<h3 id="Form-of-the-Log-Likelihood">
+<a class="anchor" href="#Form-of-the-Log-Likelihood" aria-hidden="true"><span class="octicon octicon-link"></span></a>Form of the Log Likelihood<a class="anchor-link" href="#Form-of-the-Log-Likelihood"> </a>
+</h3>
+<p>Likelihood,
+$$\begin{aligned}
+L &amp;= \prod_{i=1}^nP(y_i) \\
+  &amp;= \prod_{i=1}^np_i^{y_i}(1 - p_i)^{1 - y_i} 
+\end{aligned}$$</p>
+<p>So, log-likelihood,
+$$\begin{aligned}
+l &amp;= \log L \\
+  &amp;= \log \prod_{i=1}^np_i^{y_i}(1 - p_i)^{1 - y_i} \\
+  &amp;= \sum_{i=1}^n y_i\log p_i + (1-y_i)\log(1-p_i) \\
+  &amp;= \sum_{i=1}^n y_i.\log \frac{1}{1+ exp[-\beta^T.\vec{x}_i]} + (1-y_i).\log \frac{exp[-\beta^T.\vec{x}_i]}{1+ exp[-\beta^T.\vec{x}_i]} \\
+  &amp;= \sum_{i=1}^n -y_i.\log (1+ exp[-\beta^T.\vec{x}_i]) + (1-y_i).\log exp[-\beta^T.\vec{x}_i] \ - (1-y_i).\log (1+ exp[-\beta^T.\vec{x}_i])\\
+  &amp;= \sum_{i=1}^n -y_i.\log (1+ exp[-\beta^T.\vec{x}_i]) - (1-y_i).\beta^T.\vec{x}_i \ - (1-y_i).\log (1+ exp[-\beta^T.\vec{x}_i])\\
+  &amp;= \sum_{i=1}^n - (1-y_i).\beta^T.\vec{x}_i \ - \log (1+ exp[-\beta^T.\vec{x}_i])\\
+  &amp;= -\sum_{i=1}^n (1-y_i).\beta^T.\vec{x}_i \ + \log (1+ exp[-\beta^T.\vec{x}_i])
+\end{aligned}
+$$</p>
+<p>We will get the solution by solving $\frac{\partial l}{\partial \beta} = 0$;</p>
+<h3 id="Deriving-the-First-Derivative">
+<a class="anchor" href="#Deriving-the-First-Derivative" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deriving the First Derivative<a class="anchor-link" href="#Deriving-the-First-Derivative"> </a>
+</h3>
+<p>Now,
+$$\begin{aligned}
+\frac{\partial l}{\partial \beta_m} &amp;= \frac{\partial}{\partial \beta_m} -\sum_{i=1}^n (1-y_i).\beta^T.\vec{x}_i \ + \log (1+ exp[-\beta^T.\vec{x}_i]) \\
+ &amp;= -\sum_{i=1}^n (1-y_i).\frac{\partial}{\partial \beta_m} \beta^T.\vec{x}_i \ + \frac{\partial}{\partial \beta_m}\log (1+ exp[-\beta^T.\vec{x}_i]) \\
+ &amp;= -\sum_{i=1}^n (1-y_i).x_{im} \ + \frac{1}{1+ exp[-\beta^T.\vec{x}_i]}.exp[-\beta^T.\vec{x}_i].(-1).x_{im} \\
+ &amp;= -\sum_{i=1}^n (1-y_i).x_{im} \ + \sum_{i=1}^n \frac{exp[-\beta^T.\vec{x}_i]}{1+ exp[-\beta^T.\vec{x}_i]}.x_{im} \\
+ &amp;= -\sum_{i=1}^n (1-y_i).x_{im} \ + \sum_{i=1}^n \frac{1}{1+ exp[\beta^T.\vec{x}_i]}.x_{im}
+\end{aligned}
+$$</p>
+<p>Now, $\frac{\partial l}{\partial \beta} = 0$ will produce global maximum, if we prove that $l$ is concave function with respect to the model coefficients, ie. the <strong>Hessian Matrix</strong> is negative definite.
+
+$$H = \begin{pmatrix}\begin{pmatrix}\frac{\partial^2 l}{\partial \beta_n \beta_m}\end{pmatrix}\end{pmatrix} &lt; 0$$
+</p>
+<h3 id="Deriving-the-Second-Derivative">
+<a class="anchor" href="#Deriving-the-Second-Derivative" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deriving the Second Derivative<a class="anchor-link" href="#Deriving-the-Second-Derivative"> </a>
+</h3>
+<p>Here,
+$$
+\begin{aligned}
+\frac{\partial^2 l}{\partial \beta_n \partial \beta_m} &amp;= \frac{\partial}{\partial \beta_n} \frac{\partial l}{\partial \beta_m} \\
+ &amp;= \frac{\partial}{\partial \beta_n} \begin{bmatrix} -\sum_{i=1}^n (1-y_i).x_{im} \ + \sum_{i=1}^n \frac{1}{1+ exp[\beta^T.\vec{x}_i]}.x_{im} \end{bmatrix} \\
+ &amp;= \frac{\partial}{\partial \beta_n} \sum_{i=1}^n \frac{1}{1+ exp[\beta^T.\vec{x}_i]}.x_{im} \\
+ &amp;= \sum_{i=1}^n \frac{-1}{(1+ exp[\beta^T.\vec{x}_i])^2}.exp[\beta^T.\vec{x}_i].x_{in}.x_{im} \\
+ &amp;= -\sum_{i=1}^n \frac{1}{1+ exp[\beta^T.\vec{x}_i]}.\frac{exp[\beta^T.\vec{x}_i]}{1+ exp[\beta^T.\vec{x}_i]}.x_{in}.x_{im} \\
+ &amp;= -\sum_{i=1}^n \frac{exp[-\beta^T.\vec{x}_i]}{1+ exp[-\beta^T.\vec{x}_i]}.\frac{1}{1+ exp[-\beta^T.\vec{x}_i]}.x_{in}.x_{im} \\
+ &amp;= -\sum_{i=1}^n P(x_i = 1).P(x_i = 0).x_{in}.x_{im} \\
+ &amp;= -\sum_{i=1}^n p_i.(1-p_i).x_{in}.x_{im}
+\end{aligned}
+$$</p>
+<p>So,
+$$\begin{aligned}
+((\frac{\partial^2 l}{\partial \beta_n \partial \beta_m}))_{ij} &amp;= -\sum_{i=1}^n p_i.(1-p_i).x_{in}.x_{im}
+\end{aligned}$$</p>
+<h3 id="Forming-the-Hessian-Matrix-and-Proving-it-is-Negative-Definite">
+<a class="anchor" href="#Forming-the-Hessian-Matrix-and-Proving-it-is-Negative-Definite" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forming the Hessian Matrix and Proving it is Negative Definite<a class="anchor-link" href="#Forming-the-Hessian-Matrix-and-Proving-it-is-Negative-Definite"> </a>
+</h3>
+<p>Now consider a row, say $s$th row $(n = s)$; it is of the form,
+$$
+\begin{aligned}
+ &amp;\begin{pmatrix}-\sum_{i=1}^n p_i.(1-p_i).x_{is}.x_{i1} \ \ -\sum_{i=1}^n p_i.(1-p_i).x_{is}.x_{i2} \ \ . . . \ \ -\sum_{i=1}^n p_i.(1-p_i).x_{is}.x_{ip}\end{pmatrix} \\
+ &amp;= -\sum_{i=1}^n p_i.(1-p_i)\begin{pmatrix}x_{is}.x_{i1} \ \ \ x_{is}.x_{i2} \ \ \ ... \ \ \ x_{is}.x_{ip}\end{pmatrix} \\
+ &amp;= -\sum_{i=1}^n p_i.(1-p_i).x_{is}\begin{pmatrix}x_{i1} \ \ \ x_{i2} \ \ \ ... \ \ \ x_{ip}\end{pmatrix}
+\end{aligned}$$</p>
+<p>So, we will get the Hessian matrix if we stack p such rows one on top of the other like this:
+$$\begin{aligned}
+ H &amp;= \begin{pmatrix}
+ -\sum_{i=1}^n p_i.(1-p_i).x_{i1}\begin{pmatrix}x_{i1} \ \ \ x_{i2} \ \ \ ... \ \ \ x_{ip}\end{pmatrix} \\
+ -\sum_{i=1}^n p_i.(1-p_i).x_{i2}\begin{pmatrix}x_{i1} \ \ \ x_{i2} \ \ \ ... \ \ \ x_{ip}\end{pmatrix} \\
+ . \\
+ . \\
+ . \\
+ -\sum_{i=1}^n p_i.(1-p_i).x_{ip}\begin{pmatrix}x_{i1} \ \ \ x_{i2} \ \ \ ... \ \ \ x_{ip}\end{pmatrix}
+ \end{pmatrix} \\
+ &amp;= -\sum_{i=1}^n p_i.(1-p_i)\begin{pmatrix}
+ x_{i1}\begin{pmatrix}x_{i1} \ \ \ x_{i2} \ \ \ ... \ \ \ x_{ip}\end{pmatrix} \\
+ x_{i2}\begin{pmatrix}x_{i1} \ \ \ x_{i2} \ \ \ ... \ \ \ x_{ip}\end{pmatrix} \\
+ . \\
+ . \\
+ . \\
+ x_{ip}\begin{pmatrix}x_{i1} \ \ \ x_{i2} \ \ \ ... \ \ \ x_{ip}\end{pmatrix}
+ \end{pmatrix} \\
+ &amp;= -\sum_{i=1}^n p_i.(1-p_i). \vec{x}_i .\vec{x}_i^T \\
+ &amp;= -\sum_{i=1}^n \sqrt{p_i.(1-p_i)}.\vec{x}_i.\sqrt{p_i.(1-p_i)}.\vec{x}_i^T \\
+ &amp;= -\sum_{i=1}^n \vec{x^*}_i .\vec{x^*}_i^T \ \ \leq \ \ 0
+\end{aligned}
+$$
+Here, $\vec{x^*}_i = \sqrt{p_i.(1-p_i)}.\vec{x}_i$. The last equality holds for the fact that $\vec{x^*}_i .\vec{x^*}_i^T$ is positive definite and sum of positive definite metrices is positive definite.</p>
+<p>Now if we set $\frac{\partial l}{\partial \beta_m} = 0$, we cannot get explicit form of $\beta$ due the complicated form of $\frac{\partial l}{\partial \beta_m}$, so to get the solution we have to use numerical methods.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="kkhatua98/MathBehind"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/MathBehind/logistic%20regression/mle/hessian%20matrix/2021/10/29/LogisticRegression.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/MathBehind/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/MathBehind/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/MathBehind/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Explaining Math behind ML Models.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/MathBehind/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/MathBehind/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
