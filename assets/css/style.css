@@ -429,5 +429,6 @@ pre code { font-size: 15px !important; }
 
 /*-----------------------------------*/
 /*----- ADD YOUR STYLES BELOW -------*/
+.katex-html.base { font-size: 5px; }
 
 /*# sourceMappingURL=style.css.map */
